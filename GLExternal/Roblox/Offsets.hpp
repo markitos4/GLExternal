@@ -18,4 +18,6 @@ namespace Offsets
 	static uintptr_t FakeDataModelToDataModel = 0x1B8;
 
 	static uintptr_t ModuleScriptByteCode = 0x158;
+
+	static uintptr_t ValueBase = 0xD8;
 }

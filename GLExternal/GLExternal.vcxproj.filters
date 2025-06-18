@@ -191,10 +191,17 @@
     <ClInclude Include="Dependencies\EnvironmentInclude.h">
       <Filter>Archivos de encabezado</Filter>
     </ClInclude>
+    <ClInclude Include="Roblox\Utils\Compressing.h">
+      <Filter>Archivos de encabezado</Filter>
+    </ClInclude>
+    <ClInclude Include="Roblox\Utils\Execution.h">
+      <Filter>Archivos de encabezado</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="Environment.lua" />
     <None Include="Location.aps" />
+    <None Include=".gitignore" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Location.rc">

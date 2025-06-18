@@ -4,15 +4,18 @@ class RobloxInstance {
 public:
 	uintptr_t Self;
 
-	bool Valid(bool SkipCheck);
 	RobloxInstance GetDataModel();
-	std::vector<RobloxInstance> GetChildren();
-	std::string Name();
 	RobloxInstance FindFirstChild(std::string InstanceName);
 	RobloxInstance FindFirstChildOfClass(std::string InstanceClass);
-	void SetBytecode(const std::string& Bytecode);
+	RobloxInstance ObjectValue();
+	bool BoolValue();
+	std::vector<RobloxInstance> GetChildren();
+	std::string Name();
 	std::string ClassName();
-	void BypassDetections();
+	void SetBytecode(const std::string& Bytecode);
+	void BypassModules();
+	void RestoreModules();
+	bool Valid(bool SkipCheck);
 };
 
 static auto Instance = std::make_unique<RobloxInstance>;

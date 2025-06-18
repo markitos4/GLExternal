@@ -191,8 +191,11 @@
     <ClInclude Include="Roblox\Instance\Instance.hpp" />
     <ClInclude Include="Roblox\Offsets.hpp" />
     <ClInclude Include="Roblox\Processes.hpp" />
+    <ClInclude Include="Roblox\Utils\Compressing.h" />
+    <ClInclude Include="Roblox\Utils\Execution.h" />
   </ItemGroup>
   <ItemGroup>
+    <None Include=".gitignore" />
     <None Include="Environment.lua" />
     <None Include="Location.aps" />
   </ItemGroup>
