@@ -33,7 +33,7 @@ public:
 	{
 		Debug("Closing in 10 seconds...");
 		Sleep(10000);
-		exit(0);
+        ExitProcess(0);
 	};
 };
 

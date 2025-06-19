@@ -1,0 +1,21 @@
+﻿<Window x:Class="WpfApp1.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:WpfApp1"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="422" Width="676">
+    <Grid Margin="0,0,0,-6">
+        <RichTextBox x:Name="richbich" Margin="83,26,83,173">
+            <FlowDocument>
+                <Paragraph>
+                    <Run Text="print('Best ui ever!')"/>
+                </Paragraph>
+            </FlowDocument>
+        </RichTextBox>
+        <Button Content="Execute" HorizontalAlignment="Left" Margin="83,327,0,0" VerticalAlignment="Top" Click="Button_Click" Height="40" Width="170"/>
+        <Button Content="Inject" HorizontalAlignment="Left" Margin="423,327,0,0" VerticalAlignment="Top" Click="Button_Click_1" Height="40" Width="170"/>
+
+    </Grid>
+</Window>

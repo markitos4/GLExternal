@@ -2,9 +2,12 @@
 
 V1.00
 
-Simple 'injection' via modulescript bytecode overwriting, and it doesn't has any execution method (currently).
-Takes 3-5 seconds to finish 'injection' and it has 0 unc right now.
+Simple fast 'injection' with a simple method: modulescript bytecode overwriting, and execution with the same method.
 
-Feel free to use it without my pemission as I have made it for everyone's use!
+**10+ unc** (Will be improved within updates)
 
-Enjoy -- https://discord.gg/xDB7phZtxk.
+Feel free to use it without my credits or permission as I have made it for everyone's use!
+
+Official server: [ https://discord.gg/xDB7phZtxk ]
+
+Enjoy.

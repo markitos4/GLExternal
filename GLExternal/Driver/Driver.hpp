@@ -1,11 +1,10 @@
 #include "../Includes.h"
-#include "Definitions.hpp"
 
 class CDriver
 {
 private:
     HANDLE RobloxHandle = nullptr;
-    HMODULE NtdllHandle;
+    HMODULE NtdllHandle = nullptr;
 public:
     void Initialize(DWORD pid);
 
@@ -29,31 +28,29 @@ public:
 
 
     LPVOID AllocateVirtualMemory(size_t Size, DWORD Type = MEM_COMMIT | MEM_RESERVE, DWORD Protected = PAGE_READWRITE) {
-		if (!RobloxHandle) {
-			return 0;
-		}
+        if (!RobloxHandle) {
+            return 0;
+        }
 
-		auto AllocatedMemory = VirtualAllocEx(RobloxHandle, nullptr, Size, Type, Protected);
+        auto AllocatedMemory = VirtualAllocEx(RobloxHandle, nullptr, Size, Type, Protected);
 
-		return AllocatedMemory ? AllocatedMemory : 0;
-	}
+        return AllocatedMemory ? AllocatedMemory : 0;
+    }
 
     template <class T>
     T ReadPointer(const uintptr_t Pointer)
     {
-        T value = {};
-
+        T Value = {};
         if (!RobloxHandle) {
-            Logger()->Error("Roblox handle not initialized!");
-            return value;
+            return Value;
         }
 
-        for (auto Try = 0; Try < 6;)
+        for (auto Attempts = 0; Attempts < 5;)
         {
             if (!this->IsMemoryValid(Pointer))
             {
-                Sleep(20);
-                Try++;
+                std::this_thread::sleep_for(std::chrono::milliseconds(10));
+                Attempts++;
             }
             else
             {
@@ -61,30 +58,29 @@ public:
             }
         }
 
-        MEMORY_BASIC_INFORMATION MemoryInfo;
+        SIZE_T Readed = 0;
 
-        VirtualQueryEx(RobloxHandle, reinterpret_cast<LPCVOID>(Pointer), &MemoryInfo, sizeof(MemoryInfo));
+        BOOL Success = ReadProcessMemory(RobloxHandle, reinterpret_cast<LPCVOID>(Pointer), &Value, sizeof(T), &Readed);
+        if (!Success || Readed != sizeof(T)) {
+            return Value;
+        }
 
-        NtReadVirtualMemory(RobloxHandle, reinterpret_cast<LPCVOID>(Pointer), &value, sizeof(value), nullptr);
-
-        NtUnlockVirtualMemory(RobloxHandle, &MemoryInfo.AllocationBase, &MemoryInfo.RegionSize, 1);
-
-        return value;
+        return Value;
     }
 
     template <class T>
-    void WritePointer(const uintptr_t Pointer, const T& NewPointer)
+    void WritePointer(const uintptr_t OldPointer, const T& ReplacePointer)
     {
         if (!RobloxHandle) {
             return;
         }
 
-        for (auto Try = 0; Try < 6;)
+        for (auto Attempts = 0; Attempts < 5;)
         {
-            if (!this->IsMemoryValid(Pointer))
+            if (!this->IsMemoryValid(OldPointer))
             {
-                Sleep(20);
-                Try++;
+                std::this_thread::sleep_for(std::chrono::milliseconds(10));
+                Attempts++;
             }
             else
             {
@@ -92,13 +88,14 @@ public:
             }
         }
 
-        DWORD P;
+        SIZE_T Written = 0;
 
-        VirtualProtectEx(RobloxHandle, reinterpret_cast<LPVOID>(Pointer), sizeof(NewPointer), PAGE_READWRITE, &P);
+        BOOL Success = WriteProcessMemory(RobloxHandle, reinterpret_cast<LPVOID>(OldPointer), &ReplacePointer, sizeof(T), &Written);
+        if (!Success || Written != sizeof(T)) {
+            return;
+        }
 
-        NtWriteVirtualMemory(RobloxHandle, reinterpret_cast<PVOID>(Pointer), (PVOID)&NewPointer, sizeof(NewPointer), 0);
-
-        VirtualProtectEx(RobloxHandle, reinterpret_cast<LPVOID>(Pointer), sizeof(NewPointer), P, 0);
+        return;
     }
 };
 

@@ -10,13 +10,6 @@ void CDriver::Initialize(DWORD RobloxPid)
 
     if (RobloxPid != 0)
     {
-        this->NtdllHandle = LoadLibraryA("ntdll.dll");
-        if (!this->NtdllHandle) {
-            return;
-        }
-
-        InitializeDll(this->NtdllHandle);
-
         HANDLE handle = OpenProcess(PROCESS_ALL_ACCESS, FALSE, RobloxPid);
         if (!handle)
         {
