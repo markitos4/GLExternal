@@ -12,17 +12,6 @@ static void Execute(std::string Source) {
         Logger()->WaitAndClose();
     }
 
-    //Logger()->Debug("DataModel: " + std::to_string(DataModel.Self));
-
-    auto ScriptContext = DataModel.FindFirstChildOfClass("ScriptContext");
-    if (!ScriptContext.Valid(false))
-    {
-        Logger()->Error("Error getting ScriptContext!");
-        Logger()->WaitAndClose();
-    }
-
-    //Logger()->Debug("ScriptContext: " + std::to_string(ScriptContext.Self));
-
     auto CoreGui = DataModel.FindFirstChildOfClass("CoreGui");
     if (!CoreGui.Valid(true))
     {
@@ -30,20 +19,22 @@ static void Execute(std::string Source) {
         Logger()->WaitAndClose();
     }
 
-    //Logger()->Debug("CoreGui: " + std::to_string(CoreGui.Self));
-
-    auto ScriptsHolder = CoreGui.FindFirstChild("GLExternal_Holder").ObjectValue();
+    auto ScriptsHolder = CoreGui.WaitForChild("GLExternal_Holder");
     if (!ScriptsHolder.Valid(true))
     {
         Logger()->Error("Error getting ScriptsHolder on execution!");
         Logger()->WaitAndClose();
     }
 
-    ScriptsHolder.SetBytecode(LuauCompress::ZstdCompress(LuauCompress::Compile("return {Arctic = function(...)\n" + Source + "\nend}")));
+    auto HolderValue = ScriptsHolder.ObjectValue();
+    while (!HolderValue.Valid(true))
+    {
+        std::this_thread::sleep_for(std::chrono::milliseconds(25));
+        HolderValue = ScriptsHolder.ObjectValue();
+    }
 
-    ScriptContext.BypassModules();
+    HolderValue.SetBytecode(LuauCompress::ZstdCompress(LuauCompress::Compile("return {['GL-Execution'] = function(...)\n" + Source + "\nend}")));
 
-    Sleep(500);
-
-    ScriptContext.RestoreModules();
+    HolderValue.RemoveCoreDetections(); // We dont use 'RemoveContextDetections' because we have to restore it 
+    // or else the modules will be required consistly and they would throw error, so this is way more easy lol
 }

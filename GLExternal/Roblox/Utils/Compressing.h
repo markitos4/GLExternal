@@ -6,7 +6,7 @@
 #include "Zstd/xxhash.h"
 #include "Zstd/zstd.h"
 
-static class BytecodeEncoderClass : public Luau::BytecodeEncoder {
+ class BytecodeEncoderClass : public Luau::BytecodeEncoder {
     inline void encode(uint32_t* Data, size_t Size) override {
         for (auto i = 0u; i < Size;) {
             auto& OpCode = *reinterpret_cast<uint8_t*>(Data + i);

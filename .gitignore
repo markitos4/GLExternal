@@ -4,3 +4,8 @@ obj/
 *.user
 *.suo
 *.log
+
+bin/
+obj/
+x64/Release/
+x64/Debug/

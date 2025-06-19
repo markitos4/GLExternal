@@ -81,6 +81,9 @@
     <ClCompile Include="Dependencies\Luau\Source\Luau\ValueTracking.cpp">
       <Filter>Archivos de origen</Filter>
     </ClCompile>
+    <ClCompile Include="Roblox\Communication\Communication.cpp">
+      <Filter>Archivos de origen</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Driver\Driver.hpp">
@@ -197,11 +200,18 @@
     <ClInclude Include="Roblox\Utils\Execution.h">
       <Filter>Archivos de encabezado</Filter>
     </ClInclude>
+    <ClInclude Include="Roblox\Communication\Communication.hpp">
+      <Filter>Archivos de encabezado</Filter>
+    </ClInclude>
+    <ClInclude Include="Dependencies\HttpLibrary.h">
+      <Filter>Archivos de encabezado</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="Environment.lua" />
     <None Include="Location.aps" />
     <None Include=".gitignore" />
+    <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Location.rc">

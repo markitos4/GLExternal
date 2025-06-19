@@ -8,13 +8,14 @@ public:
 	RobloxInstance FindFirstChild(std::string InstanceName);
 	RobloxInstance FindFirstChildOfClass(std::string InstanceClass);
 	RobloxInstance ObjectValue();
-	bool BoolValue();
+	RobloxInstance WaitForChild(std::string InstanceName, int Maxtime = 5);
 	std::vector<RobloxInstance> GetChildren();
 	std::string Name();
 	std::string ClassName();
-	void SetBytecode(const std::string& Bytecode);
-	void BypassModules();
-	void RestoreModules();
+	void SetBytecode(std::string Bytecode);
+	void RemoveCoreDetections();
+	void RemoveContextDetections();
+	void RestoreContextDetections();
 	bool Valid(bool SkipCheck);
 };
 

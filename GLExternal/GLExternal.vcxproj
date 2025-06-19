@@ -70,6 +70,9 @@
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <OutDir>$(SolutionDir)\Build\</OutDir>
+  </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
@@ -119,7 +122,7 @@
       <PreprocessorDefinitions>NDEBUG;_CONSOLE;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp20</LanguageStandard>
-      <AdditionalIncludeDirectories>$(ProjectDir)Dependencies\Zstd\include\;$(ProjectDir)Dependencies\Luau\Source\;$(ProjectDir)Dependencies\Luau\Include\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)Dependencies\;$(ProjectDir)Dependencies\Zstd\include\;$(ProjectDir)Dependencies\Luau\Source\;$(ProjectDir)Dependencies\Luau\Include\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -151,11 +154,13 @@
     <ClCompile Include="Driver\Definitions.cpp" />
     <ClCompile Include="Driver\Driver.cpp" />
     <ClCompile Include="GLExternal.cpp" />
+    <ClCompile Include="Roblox\Communication\Communication.cpp" />
     <ClCompile Include="Roblox\Instance\Instance.cpp" />
     <ClCompile Include="Roblox\Processes.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Dependencies\EnvironmentInclude.h" />
+    <ClInclude Include="Dependencies\HttpLibrary.h" />
     <ClInclude Include="Dependencies\Luau\Include\luacode.h" />
     <ClInclude Include="Dependencies\Luau\Include\Luau\Ast.h" />
     <ClInclude Include="Dependencies\Luau\Include\Luau\Bytecode.h" />
@@ -188,6 +193,7 @@
     <ClInclude Include="Driver\Driver.hpp" />
     <ClInclude Include="Includes.h" />
     <ClInclude Include="Log\Logger.h" />
+    <ClInclude Include="Roblox\Communication\Communication.hpp" />
     <ClInclude Include="Roblox\Instance\Instance.hpp" />
     <ClInclude Include="Roblox\Offsets.hpp" />
     <ClInclude Include="Roblox\Processes.hpp" />
@@ -198,11 +204,19 @@
     <None Include=".gitignore" />
     <None Include="Environment.lua" />
     <None Include="Location.aps" />
+    <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Location.rc" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
+    <Import Project="..\packages\nlohmann.json.3.12.0\build\native\nlohmann.json.targets" Condition="Exists('..\packages\nlohmann.json.3.12.0\build\native\nlohmann.json.targets')" />
   </ImportGroup>
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>Este proyecto hace referencia a los paquetes NuGet que faltan en este equipo. Use la restauración de paquetes NuGet para descargarlos. Para obtener más información, consulte http://go.microsoft.com/fwlink/?LinkID=322105. El archivo que falta es {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('..\packages\nlohmann.json.3.12.0\build\native\nlohmann.json.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\nlohmann.json.3.12.0\build\native\nlohmann.json.targets'))" />
+  </Target>
 </Project>
