@@ -1,6 +1,6 @@
 --- [ GLExternal Executor Source ] ---
 
-V1.00
+V2.00
 
 Simple fast 'injection' with a simple method: modulescript bytecode overwriting, and execution with the same method.
 
